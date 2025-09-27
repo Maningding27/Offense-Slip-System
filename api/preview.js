@@ -134,15 +134,15 @@ module.exports = async (req, res) => {
     .r-remarks { left: calc(8% + 50%); top: 70.9%; width: 72%; white-space: pre-wrap; }
     .r-officials { left: calc(7.2% + 50%); top: 78.5%; width: 72%; white-space: pre-wrap; }
     
-    /* Signature image styles */
-    .l-signature { left: 26%; top: 74.5%; width: 25%; }
-    .r-signature { left: calc(26% + 50%); top: 74.5%; width: 25%; }
-    .signature-img { width: 70%; }
+   		/* Signature image styles */
+		.l-signature { left: 26%; top: 74.5%; width: 25%; }
+		.r-signature { left: calc(26% + 50%); top: 74.5%; width: 25%; }
+		.signature-img { width: 70%; }
     
     /* Student signature styles */
-    .l-student-signature { left: 12%; top: 80%; width: 25%; }
-    .r-student-signature { left: calc(12% + 50%); top: 80%; width: 25%; }
-    .student-signature-img { width: 100%; height: auto; max-height: 50px; border: 1px solid #ccc; }
+		.l-student-signature { left: 4%; top: 87%; width: 25%; }
+		.r-student-signature { left: calc(4% + 50%); top: 87%; width: 25%; }
+		.student-signature-img { width: 70%; height: auto;}
   </style>
 </head>
 <body>
