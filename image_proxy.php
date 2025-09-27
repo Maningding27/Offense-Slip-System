@@ -6,17 +6,13 @@ if (empty($fileId)) {
     exit('Missing file ID');
 }
 
-// Create cache directory if it doesn't exist
-$cacheDir = 'cache/';
-if (!is_dir($cacheDir)) {
-    mkdir($cacheDir, 0755, true);
-}
-
-$cacheFile = $cacheDir . 'img_' . md5($fileId) . '.png';
+// For Vercel serverless environment, use memory cache or skip caching
+$cacheEnabled = false; // Disable file caching for Vercel
+$cacheFile = null;
 $cacheTime = 3600; // 1 hour cache
 
-// Check if we have a cached version
-if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTime) {
+// Check if we have a cached version (only if caching is enabled)
+if ($cacheEnabled && $cacheFile && file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTime) {
     header('Content-Type: image/png');
     header('Cache-Control: public, max-age=3600');
     header('Content-Length: ' . filesize($cacheFile));
@@ -108,15 +104,25 @@ if ($image !== false) {
     // Remove background (white/light backgrounds)
     $image = removeBackground($image);
     
-    // Save optimized version to cache
-    imagepng($image, $cacheFile, 6); // PNG compression level 6 (good balance)
-    imagedestroy($image);
+    // Save optimized version to cache (if caching enabled)
+    if ($cacheEnabled && $cacheFile) {
+        imagepng($image, $cacheFile, 6); // PNG compression level 6 (good balance)
+    }
     
-    // Output optimized image
+    // Output optimized image directly
     header('Content-Type: image/png');
     header('Cache-Control: public, max-age=3600');
-    header('Content-Length: ' . filesize($cacheFile));
-    readfile($cacheFile);
+    
+    // Output image directly to browser
+    ob_start();
+    imagepng($image, null, 6);
+    $imageData = ob_get_contents();
+    ob_end_clean();
+    
+    header('Content-Length: ' . strlen($imageData));
+    echo $imageData;
+    
+    imagedestroy($image);
 } else {
     // If image processing fails, output original data
     header('Content-Type: image/jpeg');

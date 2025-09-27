@@ -1,0 +1,11 @@
+{
+  "name": "offense-slip-system",
+  "version": "1.0.0",
+  "description": "Offense Slip System with PHP",
+  "engines": {
+    "php": "8.1"
+  },
+  "scripts": {
+    "build": "echo 'No build step required for PHP'"
+  }
+}
