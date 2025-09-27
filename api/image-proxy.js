@@ -15,6 +15,7 @@ async function removeBackground(imageBuffer) {
     // Process each pixel to remove white/light backgrounds
     const processedData = Buffer.alloc(data.length);
     
+    // More aggressive background removal
     for (let i = 0; i < data.length; i += 4) {
       const r = data[i];
       const g = data[i + 1];
@@ -27,19 +28,29 @@ async function removeBackground(imageBuffer) {
       // Check if pixel is likely background (white/light)
       let isBackground = false;
       
-      // Method 1: Very bright pixels (likely white background)
-      if (brightness > 240) {
+      // Method 1: Very bright pixels (lowered threshold)
+      if (brightness > 220) {
         isBackground = true;
       }
       
-      // Method 2: Check if pixel is very close to white
-      if (r > 240 && g > 240 && b > 240) {
+      // Method 2: Check if pixel is very close to white (lowered threshold)
+      if (r > 220 && g > 220 && b > 220) {
         isBackground = true;
       }
       
       // Method 3: Check for very low contrast (likely background)
       const contrast = Math.max(r, g, b) - Math.min(r, g, b);
-      if (contrast < 30 && brightness > 200) {
+      if (contrast < 50 && brightness > 180) {
+        isBackground = true;
+      }
+      
+      // Method 4: Check for near-white colors
+      if (r > 200 && g > 200 && b > 200) {
+        isBackground = true;
+      }
+      
+      // Method 5: Check for light gray backgrounds
+      if (brightness > 200 && contrast < 30) {
         isBackground = true;
       }
       
@@ -80,6 +91,8 @@ async function removeBackground(imageBuffer) {
 
 module.exports = async (req, res) => {
   const fileId = req.query.id;
+  
+  console.log('Image proxy called with fileId:', fileId);
   
   if (!fileId) {
     return res.status(400).send('Missing file ID');

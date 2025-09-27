@@ -92,6 +92,9 @@ module.exports = async (req, res) => {
   
   const studentSignatureUrl = getGoogleDriveImage(fields['Student Signature']);
   
+  console.log('Student Signature URL:', fields['Student Signature']);
+  console.log('Processed URL:', studentSignatureUrl);
+  
   const html = `
 <!DOCTYPE html>
 <html lang="en">
@@ -150,7 +153,9 @@ module.exports = async (req, res) => {
     <span>Preview</span>
     <button id="btnDownload" class="btn">Download PDF</button>
     <span style="margin-left: 20px; font-size: 12px;">
-      Student Signature: ${fields['Student Signature'] ? 'Found' : 'Not found'}
+      Student Signature: ${fields['Student Signature'] ? 'Found' : 'Not found'} | 
+      URL: ${studentSignatureUrl ? 'Generated' : 'None'} |
+      Original: ${fields['Student Signature'] ? fields['Student Signature'].substring(0, 50) + '...' : 'None'}
     </span>
   </div>
   <div class="wrapper">
