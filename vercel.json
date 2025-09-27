@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "rewrites": [
     {
       "source": "/image_proxy",
@@ -9,8 +10,12 @@
       "destination": "/api/preview.js"
     },
     {
-      "source": "/(.*)",
+      "source": "/responses",
       "destination": "/api/index.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/public/$1"
     }
   ],
   "headers": [
