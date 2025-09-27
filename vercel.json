@@ -6,18 +6,10 @@
       "use": "@vercel/php@0.6.0"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/image_proxy.php",
-      "dest": "/image_proxy.php"
-    },
-    {
-      "src": "/preview.php",
-      "dest": "/preview.php"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.php"
+      "source": "/(.*)",
+      "destination": "/index.php"
     }
   ],
   "env": {
