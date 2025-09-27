@@ -1,11 +1,15 @@
 {
   "name": "offense-slip-system",
   "version": "1.0.0",
-  "description": "Offense Slip System with PHP",
+  "description": "Offense Slip System",
   "engines": {
-    "php": "8.1"
+    "node": "18.x"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7",
+    "sharp": "^0.32.6"
   },
   "scripts": {
-    "build": "echo 'No build step required for PHP'"
+    "build": "echo 'No build step required'"
   }
 }

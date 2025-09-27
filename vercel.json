@@ -1,20 +1,18 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "*.php",
-      "use": "@vercel/php@0.6.0"
-    }
-  ],
   "rewrites": [
     {
+      "source": "/image_proxy",
+      "destination": "/api/image-proxy.js"
+    },
+    {
+      "source": "/preview",
+      "destination": "/api/preview.js"
+    },
+    {
       "source": "/(.*)",
-      "destination": "/index.php"
+      "destination": "/api/index.js"
     }
   ],
-  "env": {
-    "PHP_VERSION": "8.1"
-  },
   "headers": [
     {
       "source": "/(.*)",
